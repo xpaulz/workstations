@@ -10,8 +10,8 @@ test -d .git || { pushd ../; mv workstations{,.`date +%Y%m%d.%H%M`} ; git clone 
 git pull
 
 pushd $HOSTROOT || { mkdir -p $HOSTROOT; pushd $HOSTROOT; }
-
-tar czf -  ~/.aws ~/.ssh ~/.gnupg ~/.gdfuse/*/config ~/.awssecret ~/.bash* | gpg -r xpaulz@gmail.com -r xpaul@spokeo.com -a -e > $GITROOT/`hostname`/keys.tgz.asc
+filelist=$( env /bin/ls -d ~/.*rc ~/.aws ~/.ssh ~/.gnupg ~/.gdfuse/*/config ~/.awssecret ~/.bash* ~/.gitconfig 2>/dev/null |sort -u  )
+tar czf - $( echo $filelist ) | gpg -r xpaulz@gmail.com -r xpaul@spokeo.com -a -e > $GITROOT/`hostname`/keys.tgz.asc
 ls -l keys.tgz.asc
 
 git commit -a -m "updating keys from `hostname`" 
