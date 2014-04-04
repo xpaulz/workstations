@@ -12,6 +12,6 @@ git pull
 
 test -d $HOSTROOT || mkdir -p $HOSTROOT
 
-tar czf -  ~/.aws ~/.ssh ~/.gnupg ~/.gdfuse ~/.awssecret ~/.bash* | gpg -r xpaulz@gmail.com -r xpaul@spokeo.com -a -e > $GITROOT/`hostname`/keys.tgz.asc
+tar czf -  ~/.aws ~/.ssh ~/.gnupg ~/.gdfuse/*/config ~/.awssecret ~/.bash* | gpg -r xpaulz@gmail.com -r xpaul@spokeo.com -a -e > $GITROOT/`hostname`/keys.tgz.asc
 git commit -a -m "updating keys from pvigils-lx1" 
 git push
