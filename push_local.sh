@@ -16,3 +16,13 @@ ls -l keys.tgz.asc
 
 git commit -a -m "updating keys from `hostname`" 
 git push
+
+popd 
+for f in */.gitignore ; do h=$( echo ${f%/*}) ; for fspec in $(<$f) ; do echo rm -rf $h/$fspec; done; done
+
+#for hostIgnore in */.gitignore; do 
+  #myhost=${hostIgnore%/*}
+  #for fspec in "$(<$hostIgnore)" ; do 
+    #echo rm -rf $myhost/$f
+  #done
+#done
