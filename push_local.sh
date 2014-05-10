@@ -11,7 +11,7 @@ git pull
 
 pushd $HOSTROOT || { mkdir -p $HOSTROOT; pushd $HOSTROOT; }
 
-filelist=$( env /bin/ls -d ~/.*rc ~/.aws ~/.ssh ~/.gnupg ~/.gdfuse/*/config ~/.awssecret ~/.bash* ~/.gitconfig 2>/dev/null |sort -u  )
+filelist=$( env /bin/ls -d ~/.*rc ~/.aws ~/.ssh ~/.gnupg ~/.gdfuse/*/config ~/.awssecret ~/.bash* ~/.gitconfig ~/.enc* ~/.vault* ~/.api* 2>/dev/null |sort -u  )
 tar czf - $( echo $filelist ) | gpg -r xpaulz@gmail.com -r xpaul@spokeo.com -a -e > $GITROOT/`hostname`/keys.tgz.asc
 ls -l keys.tgz.asc
 
