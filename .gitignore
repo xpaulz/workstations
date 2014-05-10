@@ -1,3 +1,16 @@
+keys.tgz
+home
+Users
+passwd
+shadow
+pwds.txt
+pwds*.txt
+pwds.gpg
+pwds*.gpg
+passwd.txt
+passwd.gpg
+pwd.spk
+pwd.spk.gpg
 blib/
 .build/
 _build/
