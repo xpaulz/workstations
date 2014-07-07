@@ -2,20 +2,28 @@
 # needs `which git`
 # needs `which tar`
 # needs `which tar`
-GITROOT=~/git/https/github.com/xpaulz/workstations
+GITDIR=$HOME/git/
+PROJECT_DIR=$GITDIR/https/github.com/xpaulz/workstations
+GITROOT=$PROJECT_DIR
 HOSTROOT=$GITROOT/`hostname`
+git config --global credential.helper "cache"
+git config --global credential.usehttppath true
+git config --global credential."https://github.com/xpaulz/*".username "xpaulz@yahoo.com"
 
 pushd $GITROOT || {  mkdir -p $GITROOT ;  pushd $GITROOT ; }
-test -d .git || { pushd ../; mv workstations{,.`date +%Y%m%d.%H%M`} ; git clone https://github.com/xpaulz/workstations ; popd; }
+test -d .git || { pushd ../ >/dev/null; mv workstations{,.`date +%Y%m%d.%H%M`} ; git clone https://github.com/xpaulz/workstations ; popd >/dev/null; }
 git pull
 
 pushd $HOSTROOT || { mkdir -p $HOSTROOT; pushd $HOSTROOT; }
 
-filelist=$( env /bin/ls -d ~/.*rc ~/.aws ~/.ssh ~/.gnupg ~/.gdfuse/*/config ~/.awssecret ~/.bash* ~/.gitconfig ~/.enc* ~/.vault* ~/.api* 2>/dev/null |sort -u  )
-tar czf - $( echo $filelist ) | gpg -r xpaulz@gmail.com -r xpaul@spokeo.com -a -e > $GITROOT/`hostname`/keys.tgz.asc
+
+test -f .wsync.txt || ( env /bin/ls -d ~/.*rc ~/.aws ~/.ssh ~/.gnupg ~/.gdfuse/*/config ~/.awssecret ~/.bash* ~/.gitconfig ~/.enc* ~/.vault* ~/.api* 2>/dev/null |sort -u  ) > .wsync.txt
+
+tar czf - $(<.wsync.txt)  | gpg -r xpaulz@gmail.com -r xpaul@spokeo.com -a -e > keys.tgz.asc
+
 ls -l keys.tgz.asc
 
-git commit -a -m "updating keys from `hostname`" 
+git commit -a -m "updating wsync list from `hostname`" 
 git push
 
 popd 
